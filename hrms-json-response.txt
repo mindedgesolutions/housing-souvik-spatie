@@ -1,0 +1,36 @@
+{
+    "resp": {
+        "data": [
+            {
+                "hrmsId": "1994007754",
+                "applicantName": "BIRESWAR HALDER",
+                "dateOfBirth": "15/11/1964",
+                "dateOfJoining": "17/11/1994",
+                "dateOfRetirement": "30/11/2024",
+                "mobileNo": "9831321170",
+                "gender": "Male",
+                "applicantDesignation": "Typist Grade I",
+                "officeName": "HOUSING BUILDING LOAN OFFICE ATTACHED TO HOUSING DEPARTMENT",
+                "ddoId": "CABHOA001",
+                "presentStreet": "57/13,NANDAN PALLY,SANTOSH ROY ROAD.",
+                "presentPostOffice": "BARISHA",
+                "presentPincode": "700008",
+                "presentDistrictCode": "3",
+                "applicantHeadquarter": "L2-DIRECTORATE/ COMMISSIONERATE",
+                "gradePay": "3600",
+                "payBandId": "3",
+                "applicantPostingPlace": "1, K.S.ROY ROAD, N.S.BUILDING KOLKATA KOLKATA KOLKATA Calcutta West Bengal",
+                "payInThePayBand": "14570",
+                "officeStreetCharacter": "1, K.S.ROY ROAD, N.S.BUILDING KOLKATA KOLKATA KOLKATA Calcutta West Bengal",
+                "officeCityTownVillage": "KOLKATA",
+                "officePostOffice": "KOLKATA",
+                "officePinCode": "700001",
+                "officeDistrict": "2"
+            }
+        ],
+        "genTime": "Mon Nov 18 15:57:14 IST 2024 | 1731925634654",
+        "msg": "Data fetched successfully",
+        "status": "S",
+        "statusCode": 0
+    }
+}
