@@ -42,7 +42,7 @@ class HousingApplicantOfficialDetails extends Model
         return $this->belongsTo(User::class, 'uid', 'id');
     }
 
-    public function housingOnlineApplicationDetails()
+    public function housingOnlineApplication()
     {
         return $this->hasOne(HousingOnlineApplication::class, 'applicant_official_detail_id', 'applicant_official_detail_id');
     }

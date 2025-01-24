@@ -9,6 +9,7 @@
         <form class="row g-3" action="{{ route('hrms.store') }}" id="application" autocomplete="off" method="POST"
             enctype="multipart/form-data">
             @csrf
+            {{-- <a href="{{ route('hrms.view', Crypt::encrypt('12')) }}">View</a> --}}
             <div>
                 <h5>&#9680; Personal Information (According to Service Book)</h5>
             </div>
@@ -281,15 +282,22 @@
             </div>
             <div class="col-md-4">
                 <div class="form-floating">
-                    <input type="text" class="form-control form-control-sm" id="basic_pay_range"
-                        name="basic_pay_range" placeholder="Basic Pay Range" onkeyup="return numberOnly(this)"
-                        value="{{ array_key_exists('payInThePayBand', $hrms_data) ? $hrms_data['payInThePayBand'] : old('basic_pay_range') }}"
-                        {{ array_key_exists('payInThePayBand', $hrms_data) ? 'readonly' : null }}>
-                    <label for="basic_pay_range">Basic Pay Range</label>
+                    <select class="form-select" id="basic_pay_range" name="basic_pay_range" aria-label="district"
+                        {{ array_key_exists('payBandId', $hrms_data) ? null : null }}>
+                        <option value="">- Select -</option>
+                        @foreach ($payBands as $payBand)
+                            <option value="{{ $payBand->pay_band_id }}"
+                                {{ array_key_exists('payBandId', $hrms_data) ? ($hrms_data['payBandId'] == $payBand->pay_band_id ? 'selected' : '') : (old('basic_pay_range') == $payBand->pay_band_id ? 'selected' : '') }}>
+                                {{ $payBand->scale_from . '-' . $payBand->scale_to }}</option>
+                        @endforeach
+                    </select>
+                    <label for="basic_pay_range">Select Pay Band</label>
                     <span id="error_basic_pay_range" class="text-danger"></span>
                     @error('basic_pay_range')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
+                    <input type="hidden" name="basic_pay_range_value"
+                        value="{{ array_key_exists('payBandId', $hrms_data) ? $hrms_data['payBandId'] : '' }}" />
                 </div>
             </div>
             <div class="col-md-4">
@@ -500,7 +508,7 @@
             <div class="col-md-6">
                 <div class="form-floating">
                     <input type="text" class="form-control form-control-sm" id="flat_type" name="flat_type"
-                        placeholder="Flat Type" value="{{ old('flat_type') }}">
+                        placeholder="Flat Type" value="{{ old('flat_type') }}" readonly>
                     <label for="flat_type">Flat Type</label>
                     <span id="error_flat_type" class="text-danger"></span>
                     @error('flat_type')
@@ -625,6 +633,23 @@
                             .ddo_id + '")>' + value.ddo_designation +
                             '</option>');
                     });
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching districts:', error);
+                }
+            });
+        });
+    });
+
+    $(document).ready(function() {
+        $('#basic_pay_range').on('change', function() {
+            var payRangeId = $('#basic_pay_range').val();
+            $('#flat_type').val('');
+            $.ajax({
+                url: "{{ route('hrms.flatType') }}?payBand=" + payRangeId,
+                method: 'get',
+                success: function(res) {
+                    document.getElementById('flat_type').value = res.type
                 },
                 error: function(xhr, status, error) {
                     console.error('Error fetching districts:', error);

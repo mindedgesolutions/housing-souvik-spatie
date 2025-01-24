@@ -25,7 +25,7 @@ class HousingOnlineApplication extends Model
         'remarks'
     ];
 
-    public function housingOnlineApplication()
+    public function housingApplicantOfficialDetails()
     {
         return $this->belongsTo(HousingApplicantOfficialDetails::class, 'applicant_official_detail_id', 'applicant_official_detail_id');
     }
