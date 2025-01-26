@@ -23,7 +23,11 @@ class HrmsController extends Controller
         return response()->json(['type' => $type->flatType->flat_type]);
     }
 
+    // ------
+
     public function getEstatePreference($first, $second) {}
+
+    // ------
 
     public function create()
     {
@@ -52,6 +56,8 @@ class HrmsController extends Controller
 
         return view('applications.new-application', compact('hrms_data', 'districts', 'payBands', 'hrmsDob', 'hrmsDoj', 'hrmsDor', 'hrmsGender', 'estatePreferences'));
     }
+
+    // ------
 
     public function store(NewApplicationRequest $request)
     {
@@ -95,6 +101,8 @@ class HrmsController extends Controller
             DB::rollBack();
         }
     }
+
+    // ------
 
     public function view($id)
     {
