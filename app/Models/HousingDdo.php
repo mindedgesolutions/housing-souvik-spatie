@@ -10,7 +10,9 @@ class HousingDdo extends Model
     use HasFactory;
 
     protected $table = 'housing_ddo';
+
     protected $primaryKey = 'ddo_id';
+
     protected $fillable = [
         'ddo_id',
         'treasury_id',

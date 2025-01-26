@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\HousingDdo;
+
 function getHrmsData()
 {
   return [
@@ -91,4 +93,14 @@ function formatHrmsDate($dateString)
   $result = $result->format('Y-m-d');
 
   return $result;
+}
+
+function getTreasuryId($ddoCode)
+{
+  $treasuryId = '';
+  $ddoData = HousingDdo::where('ddo_code', $ddoCode)->first();
+  if (!empty($ddoData)) {
+    $treasuryId = $ddoData->treasury_id;
+  }
+  return $treasuryId;
 }
