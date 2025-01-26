@@ -39,9 +39,10 @@ Route::middleware(['auth'])->group(function () {
     // All Applications Routes start here ------
     Route::middleware('role:applicant')->group(function () {
         Route::controller(HrmsController::class)->name('hrms.')->group(function () {
+            Route::get('flat-type', 'getFlatType')->name('flatType');
             Route::get('new-application', 'create')->name('create');
             Route::post('new-application', 'store')->name('store');
-            Route::get('success', 'success')->name('success');
+            Route::get('new-application/{id}', 'view')->name('view');
         });
 
         Route::controller(CategoryShiftingController::class)->name('categoryShifting.')->group(function () {

@@ -42,4 +42,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function housingApplicantOfficialDetails()
+    {
+        return $this->hasOne(HousingApplicantOfficialDetails::class, 'applicant_official_detail_id', 'id');
+    }
 }
