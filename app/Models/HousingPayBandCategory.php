@@ -23,4 +23,9 @@ class HousingPayBandCategory extends Model
     {
         return $this->hasOne(HousingFlatType::class, 'flat_type_id', 'flat_type_id');
     }
+
+    public function housingFlat()
+    {
+        return $this->hasOne(HousingFlat::class, 'flat_type_id', 'flat_type_id');
+    }
 }

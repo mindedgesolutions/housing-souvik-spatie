@@ -43,6 +43,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('new-application', 'create')->name('create');
             Route::post('new-application', 'store')->name('store');
             Route::get('new-application/{id}', 'view')->name('view');
+            Route::get('get-estate-preference/{first?}/{second?}', 'getEstatePreference')->name('getEstatePreference');
         });
 
         Route::controller(CategoryShiftingController::class)->name('categoryShifting.')->group(function () {

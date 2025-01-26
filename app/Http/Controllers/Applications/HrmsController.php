@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Applications;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AllotmentApplication\NewApplicationRequest;
 use App\Models\HousingDistrict;
+use App\Models\HousingEstate;
+use App\Models\HousingFlat;
 use App\Models\HousingPayBandCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -21,6 +23,8 @@ class HrmsController extends Controller
         return response()->json(['type' => $type->flatType->flat_type]);
     }
 
+    public function getEstatePreference($first, $second) {}
+
     public function create()
     {
         $hrms_data = getHRMSUserData(auth()->user()->name);
@@ -29,10 +33,24 @@ class HrmsController extends Controller
         $hrmsDoj = array_key_exists('dateOfJoining', $hrms_data) ? formatHrmsDate($hrms_data['dateOfJoining']) : '';
         $hrmsDor = array_key_exists('dateOfRetirement', $hrms_data) ? formatHrmsDate($hrms_data['dateOfRetirement']) : '';
         $hrmsGender = array_key_exists('gender', $hrms_data) ? $hrms_data['gender'] : '';
+
         $districts = HousingDistrict::orderBy('district_name', 'asc')->get() ?? [];
+
         $payBands = HousingPayBandCategory::orderBy('pay_band_id')->get();
 
-        return view('applications.new-application', compact('hrms_data', 'districts', 'payBands', 'hrmsDob', 'hrmsDoj', 'hrmsDor', 'hrmsGender'));
+        $treasuryId = getTreasuryId($hrms_data['ddoId']);
+
+        $estatePreferences = HousingEstate::where('district_code', $hrms_data['presentDistrictCode'])
+            ->whereHas('housingFlat.housingPayBandCategory', function ($query) use ($hrms_data) {
+                $query->where('pay_band_id', $hrms_data['payBandId']);
+            })
+            ->whereHas('housingTreasuryEstateMapping', function ($query) use ($treasuryId) {
+                $query->where('treasury_id', $treasuryId);
+            })
+            ->orderBy('estate_name')
+            ->get();
+
+        return view('applications.new-application', compact('hrms_data', 'districts', 'payBands', 'hrmsDob', 'hrmsDoj', 'hrmsDor', 'hrmsGender', 'estatePreferences'));
     }
 
     public function store(NewApplicationRequest $request)

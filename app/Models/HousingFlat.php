@@ -8,9 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class HousingFlat extends Model
 {
     use HasFactory;
+
     public $timestamps = false;
+
     protected $table = 'housing_flat';
+
     protected $primaryKey = 'flat_id';
+
     protected $fillable = [
         'estate_id',
         'block_id',
@@ -22,10 +26,18 @@ class HousingFlat extends Model
         'remarks'
     ];
 
-    public function getHousingEstate(): BelongsTo
+    public function housingEstate()
     {
-        return $this->belongsTo(getHousingEstate::class, 'estate_id', 'estate_id');
+        return $this->belongsTo(HousingEstate::class, 'estate_id', 'estate_id');
     }
 
-    //$response->district->district_name
+    public function housingFlatType()
+    {
+        return $this->hasOne(HousingFlatType::class, 'flat_type_id', 'flat_type_id');
+    }
+
+    public function housingPayBandCategory()
+    {
+        return $this->hasOne(HousingPayBandCategory::class, 'flat_type_id', 'flat_type_id');
+    }
 }

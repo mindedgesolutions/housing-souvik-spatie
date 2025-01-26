@@ -540,9 +540,11 @@
                     <select class="form-select" id="first_preference" name="first_preference"
                         aria-label="first preference">
                         <option value="">- Select -</option>
-                        <!-- @foreach ($districts as $district)
-    <option value="{{ $district->district_code }}">{{ $district->district_name }}</option>
-    @endforeach -->
+                        @foreach ($estatePreferences as $preference)
+                            <option value="{{ $preference->estate_id }}">
+                                {{ $preference->estate_name }}
+                            </option>
+                        @endforeach
                     </select>
                     <label for="first_preference">Select First Preference</label>
                     <span id="error_first_preference" class="text-danger"></span>
