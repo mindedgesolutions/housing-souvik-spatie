@@ -55,8 +55,12 @@ class HrmsController extends Controller
 
         $districts = HousingDistrict::orderBy('district_name', 'asc')->get() ?? [];
 
-        $payBands = HousingPayBandCategory::orderBy('pay_band_id')->get();
-        foreach ($payBands as $payBand) {
+        $ddoInfo = HousingDdo::where('ddo_code', $hrms_data['ddoId'])->select('treasury_id', 'district_code', 'ddo_designation', 'ddo_address')->first();
+
+        // Pay band related starts here ------
+        $payBands = [];
+        $dbPayBands = HousingPayBandCategory::orderBy('pay_band_id')->get();
+        foreach ($dbPayBands as $payBand) {
             if ($payBand->scale_from == 0 && $payBand->scale_to != 0) {
                 $label = '(Up to Rs' . $payBand->scale_to . '/-)';
             } else if ($payBand->scale_from != 0 && $payBand->scale_to != 0) {
@@ -67,10 +71,21 @@ class HrmsController extends Controller
             $payBands[$payBand->pay_band_id] = $label;
         }
 
-        $ddoInfo = HousingDdo::where('ddo_code', $hrms_data['ddoId'])->select('treasury_id', 'district_code', 'ddo_designation', 'ddo_address')->first();
+        $empPayBandId = '';
+        if ((int)$hrms_data['payInThePayBand'] <= 25999) {
+            $empPayBandId = 1;
+        } else if ((int)$hrms_data['payInThePayBand'] > 95100) {
+            $empPayBandId = 5;
+        } else {
+            $empPayBandId = DB::table('housing_pay_band_category')
+                ->whereRaw('cast(? as integer) >= scale_from', [$hrms_data['payInThePayBand']])
+                ->whereRaw('cast(? as integer) <= scale_to', [$hrms_data['payInThePayBand']])
+                ->first()->pay_band_id;
+        }
+        // Pay band related ends here ------
 
         // Allotment category and reasons related start here ------
-        $flatType = HousingPayBand::where('pay_band_id', $hrms_data['payBandId'])->first();
+        $flatType = HousingPayBand::where('pay_band_id', $empPayBandId)->first();
 
         $allotmentReasons = [];
 
@@ -90,17 +105,17 @@ class HrmsController extends Controller
         }
         // Allotment category and reasons related end here ------
 
-        // Estate preferences related start here ------
+        // Estate preferences related starts here ------
         $estatePreferences = HousingEstate::where('district_code', $hrms_data['presentDistrictCode'])
-            ->whereHas('housingFlat.housingPayBandCategory', function ($query) use ($hrms_data) {
-                $query->where('pay_band_id', $hrms_data['payBandId']);
+            ->whereHas('housingFlat.housingPayBandCategory', function ($query) use ($empPayBandId) {
+                $query->where('pay_band_id', $empPayBandId);
             })
             ->whereHas('housingTreasuryEstateMapping', function ($query) use ($ddoInfo) {
                 $query->where('treasury_id', $ddoInfo->treasury_id);
             })
             ->orderBy('estate_name')
             ->get();
-        // Estate preferences related end here ------
+        // Estate preferences related ends here ------
 
         Cache::put('estatePreferences', $estatePreferences, now()->addMinutes(10));
 
@@ -108,6 +123,7 @@ class HrmsController extends Controller
             'hrms_data',
             'districts',
             'payBands',
+            'empPayBandId',
             'hrmsDob',
             'hrmsDoj',
             'hrmsDor',

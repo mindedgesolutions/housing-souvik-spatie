@@ -283,12 +283,11 @@
             <div class="col-md-4">
                 <div class="form-floating">
                     <select class="form-select" id="basic_pay_range" name="basic_pay_range" aria-label="district"
-                        {{ array_key_exists('payBandId', $hrms_data) ? null : null }}>
+                        disabled>
                         <option value="">- Select -</option>
-                        @foreach ($payBands as $payBand)
-                            <option value="{{ $payBand->pay_band_id }}"
-                                {{ array_key_exists('payBandId', $hrms_data) ? ($hrms_data['payBandId'] == $payBand->pay_band_id ? 'selected' : '') : (old('basic_pay_range') == $payBand->pay_band_id ? 'selected' : '') }}>
-                                {{ $payBand->scale_from . '-' . $payBand->scale_to }}</option>
+                        @foreach ($payBands as $key => $payBand)
+                            <option value="{{ $key }}" @selected($key == $empPayBandId)>
+                                {{ $payBand }}</option>
                         @endforeach
                     </select>
                     <label for="basic_pay_range">Basic Pay Range</label>
