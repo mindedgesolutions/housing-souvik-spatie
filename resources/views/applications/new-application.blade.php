@@ -283,7 +283,7 @@
             <div class="col-md-4">
                 <div class="form-floating">
                     <select class="form-select" id="basic_pay_range" name="basic_pay_range" aria-label="district"
-                        {{ array_key_exists('payBandId', $hrms_data) ? null : null }}>
+                        {{ array_key_exists('payBandId', $hrms_data) ? null : null }} disabled>
                         <option value="">- Select -</option>
                         @foreach ($payBands as $payBand)
                             <option value="{{ $payBand->pay_band_id }}"
@@ -291,7 +291,7 @@
                                 {{ $payBand->scale_from . '-' . $payBand->scale_to }}</option>
                         @endforeach
                     </select>
-                    <label for="basic_pay_range">Select Pay Band</label>
+                    <label for="basic_pay_range">Pay Band</label>
                     <span id="error_basic_pay_range" class="text-danger"></span>
                     @error('basic_pay_range')
                         <span class="text-danger">{{ $message }}</span>
@@ -465,14 +465,16 @@
             </div>
             <div class="col-md-6">
                 <div class="form-floating">
-                    <select class="form-select" id="ddo_district" name="ddo_district" aria-label="ddo district">
+                    <select class="form-select" id="ddo_district" name="ddo_district" aria-label="ddo district"
+                        disabled>
                         <option value="">- Select -</option>
                         @foreach ($districts as $district)
-                            <option value="{{ $district->district_code }}">{{ $district->district_name }}
+                            <option value="{{ $district->district_code }}" @selected($district->district_code == $ddoInfo->district_code)>
+                                {{ $district->district_name }}
                             </option>
                         @endforeach
                     </select>
-                    <label for="ddo_district">Select DDO District</label>
+                    <label for="ddo_district">DDO District</label>
                     <span id="error_ddo_district" class="text-danger"></span>
                     @error('ddo_district')
                         <span class="text-danger">{{ $message }}</span>
@@ -481,11 +483,13 @@
             </div>
             <div class="col-md-6">
                 <div class="form-floating">
-                    <select class="form-select" id="ddo_designation" name="ddo_designation"
+                    {{-- <select class="form-select" id="ddo_designation" name="ddo_designation"
                         aria-label="ddo designation">
                         <option value="">- Select -</option>
-                    </select>
-                    <label for="ddo_designation">Select DDO Designation</label>
+                    </select> --}}
+                    <input type="text" class="form-control form-control-sm" id="ddo_designation"
+                        name="ddo_designation" value="{{ $ddoInfo->ddo_designation }}" readonly />
+                    <label for="ddo_designation">DDO Designation</label>
                     <span id="error_ddo_designation" class="text-danger"></span>
                     @error('ddo_designation')
                         <span class="text-danger">{{ $message }}</span>
@@ -494,7 +498,7 @@
             </div>
             <div class="col-md-6">
                 <div class="form-floating">
-                    <textarea class="form-control" placeholder="DDO Address" name="ddo_address" id="ddo_address">{{ old('ddo_address') }}</textarea>
+                    <textarea class="form-control" placeholder="DDO Address" name="ddo_address" id="ddo_address" readonly>{{ $ddoInfo->ddo_address ?? 'NA' }}</textarea>
                     <label for="ddo_address">DDO Address</label>
                     <span id="error_ddo_address" class="text-danger"></span>
                     @error('ddo_address')
@@ -508,7 +512,7 @@
             <div class="col-md-6">
                 <div class="form-floating">
                     <input type="text" class="form-control form-control-sm" id="flat_type" name="flat_type"
-                        placeholder="Flat Type" value="{{ old('flat_type') }}" readonly>
+                        placeholder="Flat Type" value="{{ trim($flatType->housingFlatType->flat_type) }}" readonly>
                     <label for="flat_type">Flat Type</label>
                     <span id="error_flat_type" class="text-danger"></span>
                     @error('flat_type')
@@ -521,9 +525,9 @@
                     <select class="form-select" id="allotment_reason" name="allotment_reason"
                         aria-label="allotment reason" name="allotment_reason">
                         <option value="">- Select -</option>
-                        <!-- @foreach ($districts as $district)
-    <option value="{{ $district->district_code }}">{{ $district->district_name }}</option>
-    @endforeach -->
+                        @foreach ($allotmentReasons as $reason)
+                            <option value="{{ $reason->category }}">{{ $reason->category }}</option>
+                        @endforeach
                     </select>
                     <label for="allotment_reason">Select Allotment Reason</label>
                     <span id="error_allotment_reason" class="text-danger"></span>
@@ -558,9 +562,6 @@
                     <select class="form-select" id="second_preference" name="second_preference"
                         aria-label="second preference">
                         <option value="">- Select -</option>
-                        <!-- @foreach ($districts as $district)
-    <option value="{{ $district->district_code }}">{{ $district->district_name }}</option>
-    @endforeach -->
                     </select>
                     <label for="second_preference">Select Second Preference</label>
                     <span id="error_second_preference" class="text-danger"></span>
@@ -574,9 +575,6 @@
                     <select class="form-select" id="third_preference" name="third_preference"
                         aria-label="third preference">
                         <option value="">- Select -</option>
-                        <!-- @foreach ($districts as $district)
-    <option value="{{ $district->district_code }}">{{ $district->district_name }}</option>
-    @endforeach -->
                     </select>
                     <label for="third_preference">Select Third Preference</label>
                     <span id="error_third_preference" class="text-danger"></span>
@@ -606,6 +604,16 @@
                             File Size: 50 KB</b></small></p>
                 <span id="error_doc_signature" class="text-danger"></span>
             </div>
+            <div class="col-md-6" id="supporting_doc_div" style="display: none">
+                <h6><b>Upload Allotment Reason Supporting Document</b></h6>
+                <input type="file" id="doc_supporting" name="doc_supporting" class="form-control"
+                    aria-label="Supporting Document" onchange="validateSupportDoc()">
+                <p><small><b>Allowed Extension: pdf<br>Maximum File Size: 1 MB</b></small></p>
+                <span id="error_doc_supporting" class="text-danger"></span>
+                @error('doc_supporting')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
             <div class="col-md-12 text-center">
                 <button type="submit"class="btn btn-success" id="submit-btn">Submit</button>
             </div>
@@ -621,45 +629,8 @@
 {{-- <script src="{{ asset('select2/select2.min.js') }}"></script> --}}
 
 <script>
-    $(document).ready(function() {
-        $('#ddo_district').on('change', function() {
-            var ddoDistrict = $('#ddo_district').val();
-            $('#ddo_designation').html('');
-            $.ajax({
-                url: '{{ route('ddo.designations') }}?ddoDistrict=' + ddo_district.value,
-                method: 'get',
-                success: function(res) {
-                    $('#ddo_designation').html('<option value="">- Select -</option>');
-                    $.each(res, function(key, value) {
-                        $('#ddo_designation').append('<option value="' + value
-                            .ddo_id + '")>' + value.ddo_designation +
-                            '</option>');
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching districts:', error);
-                }
-            });
-        });
-    });
-
-    $(document).ready(function() {
-        $('#basic_pay_range').on('change', function() {
-            var payRangeId = $('#basic_pay_range').val();
-            $('#flat_type').val('');
-            $.ajax({
-                url: "{{ route('hrms.flatType') }}?payBand=" + payRangeId,
-                method: 'get',
-                success: function(res) {
-                    document.getElementById('flat_type').value = res.type
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching districts:', error);
-                }
-            });
-        });
-    });
-
+    // Re: Housing preference related drop-downs start ------
+    // Second preference starts ------
     $(document).ready(function() {
         $('#first_preference').on('change', function() {
             $('#loader').show();
@@ -687,7 +658,9 @@
             });
         })
     });
+    // Second preference ends ------
 
+    // Third preference starts ------
     $(document).ready(function() {
         $('#second_preference').on('change', function() {
             $('#loader').show();
@@ -716,6 +689,21 @@
             });
         })
     });
+    // Third preference ends ------
+    // Re: Housing preference related drop-downs end ------
+
+    // Show supporting document upload div starts ------
+    $(document).ready(function() {
+        $('#allotment_reason').on('change', function() {
+            var allotmentReason = $('#allotment_reason').val();
+            if (allotmentReason == 'General') {
+                $('#supporting_doc_div').hide();
+            } else {
+                $('#supporting_doc_div').show();
+            }
+        })
+    });
+    // Show supporting document upload div ends ------
 
     function copyPermanentAddress() {
         const checkbox = document.getElementById("same_as_permanent");
@@ -841,6 +829,9 @@
             let error_doc_signature = document.querySelector(
                 "#error_doc_signature"
             );
+            let error_doc_supporting = document.querySelector(
+                "#error_doc_supporting"
+            );
             // Error fields end ------
 
             // Default error messages start ------
@@ -885,6 +876,7 @@
             error_third_preference.innerHTML = "";
             error_doc_payslip.innerHTML = "";
             error_doc_signature.innerHTML = "";
+            error_doc_supporting.innerHTML = "";
             // Default error messages end ------
 
             // Form fields start ------
@@ -940,6 +932,7 @@
             const third_preference = document.querySelector("#third_preference");
             const doc_payslip = document.querySelector("#doc_payslip");
             const doc_signature = document.querySelector("#doc_signature");
+            const doc_supporting = document.querySelector("#doc_supporting");
             // Form fields end ------
 
             let errors = 0;
@@ -1127,6 +1120,10 @@
                 error_doc_signature.innerHTML = "Signature (document) is required";
                 errors += 1;
             }
+            if (allotment_reason == 'General' && !doc_supporting.value) {
+                error_doc_supporting.innerHTML = "Supporting document is required";
+                errors += 1;
+            }
             // Empty field validations end ------
 
             // String length validations start ------
@@ -1269,6 +1266,33 @@
                 return;
             }
             error_doc_signature.innerHTML = "";
+        }
+    }
+
+    function validateSupportDoc() {
+        const error_doc_support = document.querySelector("#error_doc_supporting");
+        const supporting = document.querySelector("#doc_supporting");
+        const file = supporting.files[0];
+        const allowedExtensions = ["pdf"];
+
+        if (file) {
+            const fileExtension = file.name.split(".").pop().toLowerCase();
+            const isAllowedType = allowedExtensions.includes(fileExtension);
+
+            if (!isAllowedType) {
+                error_doc_support.innerHTML =
+                    "Invalid file type. Please upload a PDF file.";
+                supporting.value = "";
+                return;
+            }
+            const maxSize = 1024 * 1024;
+            if (file.size > maxSize) {
+                error_doc_support.innerHTML =
+                    "File size exceeds 1 MB. Please upload a smaller file.";
+                supporting.value = "";
+                return;
+            }
+            error_doc_support.innerHTML = "";
         }
     }
     // File select validations end ------

@@ -23,4 +23,9 @@ class HousingDdo extends Model
         'is_active',
         'ddo_type_id'
     ];
+
+    public function HousingDistrict()
+    {
+        return $this->hasOne(HousingDistrict::class, 'district_code', 'district_code');
+    }
 }

@@ -94,13 +94,3 @@ function formatHrmsDate($dateString)
 
   return $result;
 }
-
-function getTreasuryId($ddoCode)
-{
-  $treasuryId = '';
-  $ddoData = HousingDdo::where('ddo_code', $ddoCode)->first();
-  if (!empty($ddoData)) {
-    $treasuryId = $ddoData->treasury_id;
-  }
-  return $treasuryId;
-}

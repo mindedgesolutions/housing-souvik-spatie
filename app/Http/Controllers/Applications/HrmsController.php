@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Applications;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AllotmentApplication\NewApplicationRequest;
+use App\Models\HousingDdo;
 use App\Models\HousingDistrict;
 use App\Models\HousingEstate;
+use App\Models\HousingPayBand;
 use App\Models\HousingPayBandCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -55,21 +57,56 @@ class HrmsController extends Controller
 
         $payBands = HousingPayBandCategory::orderBy('pay_band_id')->get();
 
-        $treasuryId = getTreasuryId($hrms_data['ddoId']);
+        $ddoInfo = HousingDdo::where('ddo_code', $hrms_data['ddoId'])->select('treasury_id', 'district_code', 'ddo_designation', 'ddo_address')->first();
 
+        // Allotment category and reasons related start here ------
+        $flatType = HousingPayBand::where('pay_band_id', $hrms_data['payBandId'])->first();
+
+        $allotmentReasons = [];
+
+        switch (trim($flatType->housingFlatType->flat_type)) {
+            case 'A+':
+                $allotmentReasons = DB::table('housing_roasterAplus_master')->distinct('category')->get();
+                break;
+            case 'A':
+                $allotmentReasons = DB::table('housing_roaster4ab_master')->distinct('category')->get();
+                break;
+            case 'B':
+                $allotmentReasons = DB::table('housing_roaster4ab_master')->distinct('category')->get();
+                break;
+            default:
+                $allotmentReasons = DB::table('housing_roaster4cd_master')->distinct('category')->get();
+                break;
+        }
+        // Allotment category and reasons related end here ------
+
+        // Estate preferences related start here ------
         $estatePreferences = HousingEstate::where('district_code', $hrms_data['presentDistrictCode'])
             ->whereHas('housingFlat.housingPayBandCategory', function ($query) use ($hrms_data) {
                 $query->where('pay_band_id', $hrms_data['payBandId']);
             })
-            ->whereHas('housingTreasuryEstateMapping', function ($query) use ($treasuryId) {
-                $query->where('treasury_id', $treasuryId);
+            ->whereHas('housingTreasuryEstateMapping', function ($query) use ($ddoInfo) {
+                $query->where('treasury_id', $ddoInfo->treasury_id);
             })
             ->orderBy('estate_name')
             ->get();
+        // Estate preferences related end here ------
 
-        Cache::put('estatePreferences', $estatePreferences, now()->addMinutes(5));
+        Cache::put('estatePreferences', $estatePreferences, now()->addMinutes(10));
 
-        return view('applications.new-application', compact('hrms_data', 'districts', 'payBands', 'hrmsDob', 'hrmsDoj', 'hrmsDor', 'hrmsGender', 'estatePreferences'));
+        return view('applications.new-application', compact(
+            'hrms_data',
+            'districts',
+            'payBands',
+            'hrmsDob',
+            'hrmsDoj',
+            'hrmsDor',
+            'hrmsGender',
+            'flatType',
+            'allotmentReasons',
+            'ddoInfo',
+            'estatePreferences'
+        ));
     }
 
     // ------
