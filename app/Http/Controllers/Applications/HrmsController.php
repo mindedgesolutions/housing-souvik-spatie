@@ -62,11 +62,11 @@ class HrmsController extends Controller
         $dbPayBands = HousingPayBandCategory::orderBy('pay_band_id')->get();
         foreach ($dbPayBands as $payBand) {
             if ($payBand->scale_from == 0 && $payBand->scale_to != 0) {
-                $label = '(Up to Rs' . $payBand->scale_to . '/-)';
+                $label = '(Up to Rs.' . $payBand->scale_to . '/-)';
             } else if ($payBand->scale_from != 0 && $payBand->scale_to != 0) {
-                $label = '(Rs.' . $payBand->scale_from . '/ Up to Rs. ' . $payBand->scale_to . '/-)';
+                $label = '(Rs.' . $payBand->scale_from . '/ Up to Rs.' . $payBand->scale_to . '/-)';
             } else {
-                $label = '(Rs ' . $payBand->scale_from . '/- and above)';
+                $label = '(Rs.' . $payBand->scale_from . '/- and above)';
             }
             $payBands[$payBand->pay_band_id] = $label;
         }
