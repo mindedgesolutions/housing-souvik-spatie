@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AllotmentApplication\NewApplicationRequest;
 use App\Models\HousingDistrict;
 use App\Models\HousingEstate;
-use App\Models\HousingFlat;
 use App\Models\HousingPayBandCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -25,7 +25,20 @@ class HrmsController extends Controller
 
     // ------
 
-    public function getEstatePreference($first, $second) {}
+    public function getEstatePreference()
+    {
+        $estatePreferences = Cache::get('estatePreferences');
+
+        $estatePreferences = array_filter($estatePreferences->toArray(), function ($estate) {
+            if (request()->first && request()->second) {
+                return $estate['estate_id'] != request()->first && $estate['estate_id'] != request()->second;
+            } else {
+                return $estate['estate_id'] != request()->first;
+            }
+        });
+
+        return response()->json(['estatePreferences' => $estatePreferences]);
+    }
 
     // ------
 
@@ -53,6 +66,8 @@ class HrmsController extends Controller
             })
             ->orderBy('estate_name')
             ->get();
+
+        Cache::put('estatePreferences', $estatePreferences, now()->addMinutes(5));
 
         return view('applications.new-application', compact('hrms_data', 'districts', 'payBands', 'hrmsDob', 'hrmsDoj', 'hrmsDor', 'hrmsGender', 'estatePreferences'));
     }

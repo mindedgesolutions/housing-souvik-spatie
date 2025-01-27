@@ -660,6 +660,63 @@
         });
     });
 
+    $(document).ready(function() {
+        $('#first_preference').on('change', function() {
+            $('#loader').show();
+
+            var firstPreference = $('#first_preference').val();
+            $('#second_preference').html('');
+            $('#third_preference').html('');
+            $.ajax({
+                url: "{{ route('hrms.getEstatePreference') }}?first=" + firstPreference,
+                method: 'get',
+                success: function(res) {
+                    $('#loader').hide();
+
+                    $('#second_preference').html('<option value="">- Select -</option>');
+                    $.each(res.estatePreferences, function(key, value) {
+                        $('#second_preference').append('<option value="' + value
+                            .estate_id + '")>' + value.estate_name +
+                            '</option>');
+                    });
+                },
+                error: function(xhr, status, error) {
+                    $('#loader').hide();
+                    console.error('Error fetching districts:', error);
+                }
+            });
+        })
+    });
+
+    $(document).ready(function() {
+        $('#second_preference').on('change', function() {
+            $('#loader').show();
+
+            var firstPreference = $('#first_preference').val();
+            var seondPreference = $('#second_preference').val();
+            $('#third_preference').html('');
+            $.ajax({
+                url: "{{ route('hrms.getEstatePreference') }}?first=" + firstPreference +
+                    '&second=' + seondPreference,
+                method: 'get',
+                success: function(res) {
+                    $('#loader').hide();
+
+                    $('#third_preference').html('<option value="">- Select -</option>');
+                    $.each(res.estatePreferences, function(key, value) {
+                        $('#third_preference').append('<option value="' + value
+                            .estate_id + '")>' + value.estate_name +
+                            '</option>');
+                    });
+                },
+                error: function(xhr, status, error) {
+                    $('#loader').hide();
+                    console.error('Error fetching districts:', error);
+                }
+            });
+        })
+    });
+
     function copyPermanentAddress() {
         const checkbox = document.getElementById("same_as_permanent");
 
