@@ -56,6 +56,16 @@ class HrmsController extends Controller
         $districts = HousingDistrict::orderBy('district_name', 'asc')->get() ?? [];
 
         $payBands = HousingPayBandCategory::orderBy('pay_band_id')->get();
+        foreach ($payBands as $payBand) {
+            if ($payBand->scale_from == 0 && $payBand->scale_to != 0) {
+                $label = '(Up to Rs' . $payBand->scale_to . '/-)';
+            } else if ($payBand->scale_from != 0 && $payBand->scale_to != 0) {
+                $label = '(Rs.' . $payBand->scale_from . '/ Up to Rs. ' . $payBand->scale_to . '/-)';
+            } else {
+                $label = '(Rs ' . $payBand->scale_from . '/- and above)';
+            }
+            $payBands[$payBand->pay_band_id] = $label;
+        }
 
         $ddoInfo = HousingDdo::where('ddo_code', $hrms_data['ddoId'])->select('treasury_id', 'district_code', 'ddo_designation', 'ddo_address')->first();
 

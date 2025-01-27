@@ -144,8 +144,8 @@
                         name="p_district" {{ array_key_exists('permanentDistrictCode', $hrms_data) ? 'disabled' : null }}>
                         <option value="">- Select -</option>
                         @foreach ($districts as $district)
-                            <option value="{{ $district->district_code }}"
-                                {{ array_key_exists('permanentDistrictCode', $hrms_data) ? ($hrms_data['permanentDistrictCode'] == $district->district_code ? 'selected' : '') : (old('p_district') == $district->district_code ? 'selected' : '') }}>
+                            <option value="{{ $district->hrms_district_id }}"
+                                {{ array_key_exists('permanentDistrictCode', $hrms_data) ? ($hrms_data['permanentDistrictCode'] == $district->hrms_district_id ? 'selected' : '') : (old('p_district') == $district->hrms_district_id ? 'selected' : '') }}>
                                 {{ $district->district_name }}</option>
                         @endforeach
                     </select>
@@ -224,8 +224,8 @@
                         {{ array_key_exists('presentDistrictCode', $hrms_data) ? 'disabled' : null }}>
                         <option value="">- Select -</option>
                         @foreach ($districts as $district)
-                            <option value="{{ $district->district_code }}"
-                                {{ array_key_exists('presentDistrictCode', $hrms_data) ? ($hrms_data['presentDistrictCode'] == $district->district_code ? 'selected' : '') : (old('present_district') == $district->district_code ? 'selected' : '') }}>
+                            <option value="{{ $district->hrms_district_id }}"
+                                {{ array_key_exists('presentDistrictCode', $hrms_data) ? ($hrms_data['presentDistrictCode'] == $district->hrms_district_id ? 'selected' : '') : (old('present_district') == $district->hrms_district_id ? 'selected' : '') }}>
                                 {{ $district->district_name }}</option>
                         @endforeach
                     </select>
@@ -283,7 +283,7 @@
             <div class="col-md-4">
                 <div class="form-floating">
                     <select class="form-select" id="basic_pay_range" name="basic_pay_range" aria-label="district"
-                        {{ array_key_exists('payBandId', $hrms_data) ? null : null }} disabled>
+                        {{ array_key_exists('payBandId', $hrms_data) ? null : null }}>
                         <option value="">- Select -</option>
                         @foreach ($payBands as $payBand)
                             <option value="{{ $payBand->pay_band_id }}"
@@ -291,7 +291,7 @@
                                 {{ $payBand->scale_from . '-' . $payBand->scale_to }}</option>
                         @endforeach
                     </select>
-                    <label for="basic_pay_range">Pay Band</label>
+                    <label for="basic_pay_range">Basic Pay Range</label>
                     <span id="error_basic_pay_range" class="text-danger"></span>
                     @error('basic_pay_range')
                         <span class="text-danger">{{ $message }}</span>
@@ -304,8 +304,8 @@
                 <div class="form-floating">
                     <input type="text" class="form-control form-control-sm" id="basic_pay" name="basic_pay"
                         placeholder="Basic Pay" onkeyup="return numberOnly(this)"
-                        value="{{ array_key_exists('gradePay', $hrms_data) ? $hrms_data['gradePay'] : old('basic_pay') }}"
-                        {{ array_key_exists('gradePay', $hrms_data) ? 'readonly' : null }}>
+                        value="{{ array_key_exists('payInThePayBand', $hrms_data) ? $hrms_data['payInThePayBand'] : old('basic_pay') }}"
+                        {{ array_key_exists('payInThePayBand', $hrms_data) ? 'readonly' : null }}>
                     <label for="basic_pay">Basic Pay</label>
                     <span id="error_basic_pay" class="text-danger"></span>
                     @error('basic_pay')
