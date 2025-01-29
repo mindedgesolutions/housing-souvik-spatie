@@ -47,4 +47,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(HousingApplicantOfficialDetails::class, 'applicant_official_detail_id', 'id');
     }
+
+    public function housingApplicant()
+    {
+        return $this->hasMany(HousingApplicant::class, 'uid', 'id');
+    }
 }

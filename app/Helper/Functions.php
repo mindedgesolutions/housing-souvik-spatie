@@ -94,3 +94,59 @@ function formatHrmsDate($dateString)
 
   return $result;
 }
+
+
+// array:43 [▼ // app\Http\Controllers\Applications\HrmsController.php:160
+//   "_token" => "S2FoTNTVjlI1UXon4h2MjQ5yng5uvLSC9MiqCJhI"
+//   "applicant_name" => "BIRESWAR HALDER"
+//   "father_husband_name" => "Test Father"
+//   "mobile_no" => "9831321170"
+//   "email" => "test@test.com"
+//   "dob" => "1964-11-15"
+//   "gender" => "Male"
+//   "p_address" => "57/13,NANDAN PALLY,SANTOSH ROY ROAD"
+//   "p_city_town_village" => "Kolkata"
+//   "p_post_office" => "Barisha"
+//   "p_district" => "3"
+//   "p_district_value" => null
+//   "p_pin_code" => "700008"
+//   "present_address" => "57/13,NANDAN PALLY,SANTOSH ROY ROAD."
+//   "present_city_town_village" => "Kolkata"
+//   "present_post_office" => "BARISHA"
+//   "present_district_value" => "3"
+//   "present_pin_code" => "700008"
+//   "hrms_id" => "1994007754"
+//   "designation" => "Typist Grade I"
+//   "basic_pay_range_value" => "1"
+//   "basic_pay" => "14570"
+//   "place_of_posting" => "Kolkata"
+//   "headquarter" => "L2-DIRECTORATE/ COMMISSIONERATE"
+//   "doj" => "1994-11-17"
+//   "dor" => "2024-11-30"
+//   "name_of_office" => "HOUSING BUILDING LOAN OFFICE ATTACHED TO HOUSING DEPARTMENT"
+//   "office_address" => "1, K.S.ROY ROAD, N.S.BUILDING KOLKATA KOLKATA KOLKATA Calcutta West Bengal"
+//   "office_city_town_village" => "KOLKATA"
+//   "office_post_office" => "KOLKATA"
+//   "office_district_value" => "2"
+//   "office_pin_code" => "700001"
+//   "office_phn_no" => "700034"
+//   "ddo_designation" => "REGISTRAR & DDO, HOUSING DEPTT.(A.E.) BR."
+//   "ddo_address" => "NA"
+//   "flat_type" => "D"
+//   "allotment_reason" => "Physically Handicaped or Serious Illness"
+//   "first_preference" => "24"
+//   "second_preference" => "12"
+//   "third_preference" => "10"
+//   "doc_payslip" => 
+// Illuminate\Http
+// \
+// UploadedFile {#1396 ▶}
+//   "doc_signature" => 
+// Illuminate\Http
+// \
+// UploadedFile {#1419 ▶}
+//   "doc_supporting" => 
+// Illuminate\Http
+// \
+// UploadedFile {#1420 ▶}
+// ]

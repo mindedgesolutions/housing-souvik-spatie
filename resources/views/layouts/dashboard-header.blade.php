@@ -12,8 +12,8 @@
             <img src="{{ asset('/theme/images/profile_icon.png') }}" alt="" width="50" height="50"
                 class="rounded-circle me-2">
             <div class="user-name">
-                <strong>{{ Auth::user()->name }}</strong></br>
-                <small><b>Email:</b> {{ Auth::user()->email }}</small>
+                <strong>{{ auth()->user()->name }}</strong></br>
+                <small><b>Email:</b> {{ auth()->user()->email }}</small>
             </div>
         </a>
         <ul class="dropdown-menu text-small shadow" style="">

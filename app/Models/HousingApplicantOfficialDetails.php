@@ -13,6 +13,8 @@ class HousingApplicantOfficialDetails extends Model
 
     protected $primaryKey = 'applicant_official_detail_id';
 
+    public $timestamps = false;
+
     protected $fillable = [
         'uid',
         'ddo_id',
@@ -40,6 +42,11 @@ class HousingApplicantOfficialDetails extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'uid', 'id');
+    }
+
+    public function housingApplicant()
+    {
+        return $this->belongsTo(HousingApplicant::class, 'housing_applicant_id', 'housing_applicant_id');
     }
 
     public function housingOnlineApplication()

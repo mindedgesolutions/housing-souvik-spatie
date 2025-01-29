@@ -9,7 +9,14 @@
         <form class="row g-3" action="{{ route('hrms.store') }}" id="application" autocomplete="off" method="POST"
             enctype="multipart/form-data">
             @csrf
-            {{-- <a href="{{ route('hrms.view', Crypt::encrypt('12')) }}">View</a> --}}
+            @method('POST')
+
+            {{-- Hidden fields start --}}
+            <input type="hidden" name="ddo_id" value="{{ $ddoInfo->ddo_id }}">
+            <input type="hidden" name="basic_pay_range_value" value="{{ $empPayBandId }}" />
+            <input type="hidden" name="grade_pay" value="{{ $hrms_data['gradePay'] }}" />
+            {{-- Hidden fields end --}}
+
             <div>
                 <h5>&#9680; Personal Information (According to Service Book)</h5>
             </div>
@@ -295,8 +302,6 @@
                     @error('basic_pay_range')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
-                    <input type="hidden" name="basic_pay_range_value"
-                        value="{{ array_key_exists('payBandId', $hrms_data) ? $hrms_data['payBandId'] : '' }}" />
                 </div>
             </div>
             <div class="col-md-4">
@@ -1196,10 +1201,10 @@
                 errors += 1;
             }
             const selectedDor = new Date(dor.value);
-            if (selectedDor < today) {
-                error_dor.innerHTML = "Date of retirement cannot be in past";
-                errors += 1;
-            }
+            // if (selectedDor < today) {
+            //     error_dor.innerHTML = "Date of retirement cannot be in past";
+            //     errors += 1;
+            // }
             // Date validations end ------
 
             if (errors > 0) {
