@@ -7,10 +7,13 @@ use Illuminate\Http\Request;
 
 class FloorShiftingController extends Controller
 {
-    public function index()
+    public function create()
     {
         return view('applications.floor-shifting');
     }
 
-    public function store() {}
+    public function store(Request $request)
+    {
+        dd($request->all());
+    }
 }

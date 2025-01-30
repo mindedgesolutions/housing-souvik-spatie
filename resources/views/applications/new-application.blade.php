@@ -644,7 +644,7 @@
             $('#second_preference').html('');
             $('#third_preference').html('');
             $.ajax({
-                url: "{{ route('hrms.getEstatePreference') }}?first=" + firstPreference,
+                url: "{{ route('master.getEstatePreference') }}?first=" + firstPreference,
                 method: 'get',
                 success: function(res) {
                     $('#loader').hide();
@@ -674,7 +674,7 @@
             var seondPreference = $('#second_preference').val();
             $('#third_preference').html('');
             $.ajax({
-                url: "{{ route('hrms.getEstatePreference') }}?first=" + firstPreference +
+                url: "{{ route('master.getEstatePreference') }}?first=" + firstPreference +
                     '&second=' + seondPreference,
                 method: 'get',
                 success: function(res) {

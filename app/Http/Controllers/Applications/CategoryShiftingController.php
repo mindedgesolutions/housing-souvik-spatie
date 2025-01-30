@@ -3,13 +3,17 @@
 namespace App\Http\Controllers\Applications;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class CategoryShiftingController extends Controller
 {
-    public function index()
+    public function create()
     {
         return view('applications.category-shifting');
     }
 
-    public function store() {}
+    public function store(Request $request)
+    {
+        dd($request->all());
+    }
 }

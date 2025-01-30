@@ -9,6 +9,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HousingFlatController;
 use App\Http\Controllers\Applications\NewApplicationController;
 use App\Http\Controllers\HrmsDdoController;
+use App\Http\Controllers\Master\MasterController;
 use App\Http\Controllers\MigrateController;
 use Illuminate\Support\Facades\Auth;
 
@@ -36,24 +37,26 @@ Route::controller(LoginController::class)->name('login.')->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // All Applications Routes start here ------
+    Route::controller(MasterController::class)->name('master.')->group(function () {
+        Route::get('flat-type', 'getFlatType')->name('flatType');
+        Route::get('get-estate-preference', 'getEstatePreference')->name('getEstatePreference');
+    });
+
     Route::middleware('role:applicant')->group(function () {
+        // All Applications Routes start here ------
         Route::controller(NewApplicationController::class)->name('hrms.')->group(function () {
-            Route::get('flat-type', 'getFlatType')->name('flatType');
-            Route::get('new-application', 'create')->name('create');
+            Route::get('applications/new-application', 'create')->name('create');
             Route::post('new-application', 'store')->name('store');
-            Route::get('new-application/{id}', 'view')->name('view');
-            Route::get('get-estate-preference', 'getEstatePreference')->name('getEstatePreference');
         });
 
-        Route::controller(CategoryShiftingController::class)->name('categoryShifting.')->group(function () {
-            Route::get('category-shifting', 'index')->name('index');
-            Route::post('category-shifting', 'store')->name('store');
+        Route::controller(CategoryShiftingController::class)->name('cs.')->group(function () {
+            Route::get('applications/category-shifting', 'create')->name('create');
+            Route::post('cs', 'store')->name('store');
         });
 
-        Route::controller(FloorShiftingController::class)->name('floorShifting.')->group(function () {
-            Route::get('floor-shifting', 'index')->name('index');
-            Route::post('floor-shifting', 'store')->name('store');
+        Route::controller(FloorShiftingController::class)->name('fs.')->group(function () {
+            Route::get('applications/floor-shifting', 'create')->name('create');
+            Route::post('vs', 'store')->name('store');
         });
         // All Applications Routes end here ------
     });
