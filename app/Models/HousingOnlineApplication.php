@@ -13,6 +13,8 @@ class HousingOnlineApplication extends Model
 
     protected $primaryKey = 'online_application_id';
 
+    public $timestamps = false;
+
     protected $fillable = [
         'applicant_official_detail_id',
         'status',

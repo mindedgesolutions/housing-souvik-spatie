@@ -15,6 +15,7 @@
             <input type="hidden" name="ddo_id" value="{{ $ddoInfo->ddo_id }}">
             <input type="hidden" name="basic_pay_range_value" value="{{ $empPayBandId }}" />
             <input type="hidden" name="grade_pay" value="{{ $hrms_data['gradePay'] }}" />
+            <input type="hidden" name="flat_type_id" value="{{ $flatType->housingFlatType->flat_type_id }}" />
             {{-- Hidden fields end --}}
 
             <div>

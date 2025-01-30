@@ -9,6 +9,8 @@ use App\Models\HousingApplicantOfficialDetails;
 use App\Models\HousingDdo;
 use App\Models\HousingDistrict;
 use App\Models\HousingEstate;
+use App\Models\HousingNewAllotmentApplication;
+use App\Models\HousingOnlineApplication;
 use App\Models\HousingPayBand;
 use App\Models\HousingPayBandCategory;
 use App\Models\User;
@@ -177,7 +179,7 @@ class HrmsController extends Controller
 
             $id = User::where('name', $request->hrms_id)->first()->id;
 
-            // housing_applicant ------
+            // housing_applicant starts ------
             $gender = $request->gender == 'Male' ? 'M' : 'F';
 
             $applicantInfo = [
@@ -201,8 +203,9 @@ class HrmsController extends Controller
             ];
 
             $applicantId = HousingApplicant::create($applicantInfo)->housing_applicant_id;
+            // housing_applicant ends ------
 
-            // housing_applicant_official_detail ------
+            // housing_applicant_official_detail starts ------
             $applicantOfficeInfo = [
                 'uid' => $id,
                 'ddo_id' => $request->ddo_id,
@@ -228,6 +231,52 @@ class HrmsController extends Controller
             ];
 
             $applicantOfficeId = HousingApplicantOfficialDetails::create($applicantOfficeInfo)->applicant_official_detail_id;
+            // housing_applicant_official_detail ends ------
+
+            // housing_online_application starts ------
+            // REFER housing_allotment_status_master FOR status ------
+            $maxComputerSrNo = HousingOnlineApplication::max('computer_serial_no');
+            $computerSrNo = $maxComputerSrNo ? $maxComputerSrNo + 1 : 1;
+
+            $onlineApplication = [
+                'applicant_official_detail_id' => $applicantOfficeId,
+                'status' => 'applied',
+                'date_of_application' => date('Y-m-d'),
+                'computer_serial_no' => $computerSrNo,
+            ];
+            $onlineApplicationId = HousingOnlineApplication::create($onlineApplication)->online_application_id;
+
+            $applicationNo = 'NA-' . $reason . '-' . date('dmY') . '-' . $onlineApplicationId;
+
+            HousingOnlineApplication::updateOrCreate(
+                ['online_application_id' => $onlineApplicationId],
+                ['application_no' => $applicationNo]
+            );
+            // housing_online_application ends ------
+
+            // housing_new_allotment_application starts ------
+            $newAllotmentApplication = [
+                'online_application_id' => $onlineApplicationId,
+                'allotment_category' => $request->allotment_reason,
+                'flat_type_id' => $request->flat_type_id,
+            ];
+
+            $newAllotmentApplicationId = HousingNewAllotmentApplication::create($newAllotmentApplication)->new_allotment_application_id;
+            // housing_new_allotment_application ends ------
+
+            // housing_new_application_estate_preferences starts ------
+            $preferences = [$request->first_preference, $request->second_preference, $request->third_preference];
+
+            foreach ($preferences as $key => $preference) {
+                $estatePreference = [
+                    'online_application_id' => $onlineApplicationId,
+                    'estate_id' => $preference,
+                    'preference_order' => $key + 1,
+                    'created' => now(),
+                ];
+                DB::table('housing_new_application_estate_preferences')->insert($estatePreference);
+            }
+            // housing_new_application_estate_preferences ends ------
 
             if ($request->has('doc_payslip')) {
                 $file = $request->file('doc_payslip');
