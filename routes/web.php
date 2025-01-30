@@ -7,7 +7,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HousingFlatController;
-use App\Http\Controllers\Applications\HrmsController;
+use App\Http\Controllers\Applications\NewApplicationController;
 use App\Http\Controllers\HrmsDdoController;
 use App\Http\Controllers\MigrateController;
 use Illuminate\Support\Facades\Auth;
@@ -38,7 +38,7 @@ Route::middleware(['auth'])->group(function () {
 
     // All Applications Routes start here ------
     Route::middleware('role:applicant')->group(function () {
-        Route::controller(HrmsController::class)->name('hrms.')->group(function () {
+        Route::controller(NewApplicationController::class)->name('hrms.')->group(function () {
             Route::get('flat-type', 'getFlatType')->name('flatType');
             Route::get('new-application', 'create')->name('create');
             Route::post('new-application', 'store')->name('store');

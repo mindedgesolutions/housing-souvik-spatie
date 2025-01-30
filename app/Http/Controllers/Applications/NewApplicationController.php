@@ -18,10 +18,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Str;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Str;
 
-class HrmsController extends Controller
+class NewApplicationController extends Controller
 {
     public function getFlatType(Request $request)
     {
@@ -150,8 +150,6 @@ class HrmsController extends Controller
 
     public function store(NewApplicationRequest $request)
     {
-        // Uncomment validations in NewApplicationRequest.php
-
         try {
             DB::beginTransaction();
 
