@@ -13,6 +13,8 @@ class HousingTreasuryEstateMapping extends Model
 
     protected $primmaryKey = 'housing_treasury_estate_mapping_id';
 
+    public $timestamps = false;
+
     protected $fillable = [
         'treasury_id',
         'estate_id',

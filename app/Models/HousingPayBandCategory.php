@@ -13,6 +13,8 @@ class HousingPayBandCategory extends Model
 
     protected $primaryKey = 'pay_band_id';
 
+    public $timestamps = false;
+
     protected $fillable = [
         'flat_type_id',
         'scale_from',

@@ -13,6 +13,8 @@ class HousingDdo extends Model
 
     protected $primaryKey = 'ddo_id';
 
+    public $timestamps = false;
+
     protected $fillable = [
         'ddo_id',
         'treasury_id',

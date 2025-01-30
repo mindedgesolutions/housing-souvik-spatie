@@ -13,5 +13,7 @@ class HousingCircle extends Model
 
     protected $primaryKey = 'circle_id';
 
+    public $timestamps = false;
+
     protected $fillable = ['circle_name'];
 }

@@ -8,9 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class HousingFlatStatus extends Model
 {
     use HasFactory;
+
     protected $table = 'housing_flat_status';
+
     protected $primaryKey = 'flat_status_id';
+
+    public $timestamps = false;
+
     protected $fillable = [
-        'flat_status','availability','is_occupied','flat_status_code','is_active'
+        'flat_status',
+        'availability',
+        'is_occupied',
+        'flat_status_code',
+        'is_active'
     ];
 }

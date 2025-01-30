@@ -9,9 +9,12 @@ class HousingDistrict extends Model
 {
     use HasFactory;
 
-    public $timestamps = false;
     protected $table = 'housing_district';
+
     protected $primaryKey = 'district_code';
+
+    public $timestamps = false;
+
     protected $fillable = [
         'district_name',
         'hrms_district_id'

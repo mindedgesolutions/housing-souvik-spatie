@@ -13,6 +13,8 @@ class HousingDivision extends Model
 
     protected $primaryKey = 'division_id';
 
+    public $timestamps = false;
+
     protected $fillable = ['division_name', 'circle_id'];
 
     public function housingCicle()
