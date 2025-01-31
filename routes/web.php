@@ -42,19 +42,23 @@ Route::middleware(['auth'])->group(function () {
         Route::get('get-estate-preference', 'getEstatePreference')->name('getEstatePreference');
     });
 
-    Route::middleware('role:applicant')->group(function () {
+    Route::middleware(['role:applicant'])->group(function () {
         // All Applications Routes start here ------
-        Route::controller(NewApplicationController::class)->name('hrms.')->group(function () {
-            Route::get('applications/new-application', 'create')->name('create');
-            Route::post('new-application', 'store')->name('store');
-        });
+        Route::controller(NewApplicationController::class)
+            ->middleware(['check.applied'])
+            ->name('hrms.')
+            ->group(function () {
+                Route::get('applications/new-application', 'create')->name('create');
+                Route::post('new-application', 'store')->name('store');
+                Route::get('applications/view-application', 'view')->name('view');
+            });
 
         Route::controller(CategoryShiftingController::class)->name('cs.')->group(function () {
             Route::get('applications/category-shifting', 'create')->name('create');
             Route::post('cs', 'store')->name('store');
         });
 
-        Route::controller(FloorShiftingController::class)->name('fs.')->group(function () {
+        Route::controller(FloorShiftingController::class)->name('vs.')->group(function () {
             Route::get('applications/floor-shifting', 'create')->name('create');
             Route::post('vs', 'store')->name('store');
         });

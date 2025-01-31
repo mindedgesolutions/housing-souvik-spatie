@@ -39,7 +39,7 @@
                     <li><a class="nav-link {{ Str::contains(url()->current(), ['new-application']) ? 'active' : null }}"
                             href="{{ route('hrms.create') }}">New Application</a></li>
                     <li><a class="nav-link {{ Str::contains(url()->current(), ['floor-shifting']) ? 'active' : null }}"
-                            href="{{ route('fs.create') }}">Floor Shifting</a></li>
+                            href="{{ route('vs.create') }}">Floor Shifting</a></li>
                     <li><a class="nav-link {{ Str::contains(url()->current(), ['category-shifting']) ? 'active' : null }}"
                             href="{{ route('cs.create') }}">Category Shifting</a></li>
                     {{-- <li><a class="nav-link" href="#">New Licence</a></li> --}}

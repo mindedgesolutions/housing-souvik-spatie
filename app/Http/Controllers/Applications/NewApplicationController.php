@@ -14,6 +14,7 @@ use App\Models\HousingOnlineApplication;
 use App\Models\HousingPayBand;
 use App\Models\HousingPayBandCategory;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
@@ -274,4 +275,9 @@ class NewApplicationController extends Controller
     }
 
     // ------
+
+    public function view()
+    {
+        return view('applications.new-application-view');
+    }
 }
