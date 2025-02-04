@@ -45,7 +45,7 @@ class NewApplicationRequest extends FormRequest
             'place_of_posting' => 'required',
             'headquarter' => 'required',
             'doj' => 'required|before:' . now(),
-            'dor' => 'required|after:' . now(),
+            // 'dor' => 'required|after:' . now(),
             'name_of_office' => 'required',
             'office_address' => 'required',
             'office_city_town_village' => 'required',
@@ -61,8 +61,8 @@ class NewApplicationRequest extends FormRequest
             'second_preference' => 'required',
             'third_preference' => 'required',
             'doc_payslip' => 'required|mimes:pdf|max:1024',
-            'doc_signature' => 'required|mimes:png,jpg,jpeg,webp|max:512|dimensions:width=140,height=60',
-            // 'doc_signature' => 'required|mimes:png,jpg,jpeg,webp|max:512',
+            // 'doc_signature' => 'required|mimes:png,jpg,jpeg,webp|max:512|dimensions:width=140,height=60',
+            'doc_signature' => 'required|mimes:png,jpg,jpeg,webp|max:512',
         ];
     }
 

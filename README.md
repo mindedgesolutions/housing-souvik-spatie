@@ -80,12 +80,12 @@ php artisan optimize:clear
 
 <!-- Truncate queries -->
 
-truncate table housing_online_application cascade
-truncate table housing_online_application_upload_doc cascade
-truncate table housing_online_complaint cascade
-truncate table file_managed cascade
-truncate table housing_allotment_process cascade
-truncate table housing_allotment_roaster_counter cascade
-truncate table housing_allotment_roaster_details cascade
-truncate table housing_applicant cascasde
-truncate table housing_ddo_hrms_mapping cascade
+truncate table housing_online_application cascade;
+truncate table housing_online_application_upload_doc cascade;
+truncate table housing_online_complaint cascade;
+truncate table file_managed cascade;
+truncate table housing_allotment_process cascade;
+truncate table housing_allotment_roaster_counter cascade;
+truncate table housing_allotment_roaster_details cascade;
+truncate table housing_applicant cascade;
+truncate table housing_ddo_hrms_mapping cascade;
