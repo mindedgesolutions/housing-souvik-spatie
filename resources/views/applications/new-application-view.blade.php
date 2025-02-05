@@ -6,6 +6,6 @@
 
 @section('dashboard-body')
     <div class="row">
-        <h3>View application</h3>
+        <h3>Application has been submitted. View application</h3>
     </div>
 @endsection

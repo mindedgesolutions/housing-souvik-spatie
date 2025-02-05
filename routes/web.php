@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AllotmentDetailsController;
 use App\Http\Controllers\Applications\CategoryShiftingController;
 use App\Http\Controllers\Applications\FloorShiftingController;
 use Illuminate\Support\Facades\Route;
@@ -8,6 +9,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HousingFlatController;
 use App\Http\Controllers\Applications\NewApplicationController;
+use App\Http\Controllers\ApplicationStatusController;
 use App\Http\Controllers\HrmsDdoController;
 use App\Http\Controllers\Master\MasterController;
 use App\Http\Controllers\MigrateController;
@@ -47,22 +49,50 @@ Route::middleware(['auth'])->group(function () {
         Route::controller(NewApplicationController::class)
             ->middleware(['check.applied'])
             ->name('hrms.')
+            ->prefix('applications')
             ->group(function () {
-                Route::get('applications/new-application', 'create')->name('create');
+                Route::get('new-application', 'create')->name('create');
                 Route::post('new-application', 'store')->name('store');
-                Route::get('applications/view-application', 'view')->name('view');
+                Route::get('view-application', 'view')->name('view');
             });
 
-        Route::controller(CategoryShiftingController::class)->name('cs.')->group(function () {
-            Route::get('applications/category-shifting', 'create')->name('create');
-            Route::post('cs', 'store')->name('store');
-        });
+        Route::controller(CategoryShiftingController::class)
+            ->name('cs.')
+            ->prefix('applications')
+            ->group(function () {
+                Route::get('category-shifting', 'create')->name('create');
+                Route::post('cs', 'store')->name('store');
+            });
 
-        Route::controller(FloorShiftingController::class)->name('vs.')->group(function () {
-            Route::get('applications/floor-shifting', 'create')->name('create');
-            Route::post('vs', 'store')->name('store');
-        });
+        Route::controller(FloorShiftingController::class)
+            ->name('vs.')
+            ->prefix('applications')
+            ->group(function () {
+                Route::get('floor-shifting', 'create')->name('create');
+                Route::post('vs', 'store')->name('store');
+            });
         // All Applications Routes end here ------
+
+        // Application Status Routes start here ------
+        Route::controller(ApplicationStatusController::class)
+            ->name('status.')
+            ->prefix('status')
+            ->group(function () {
+                Route::get('application-status', 'applicationStatus')->name('applicationStatus');
+                Route::get('wait-list-status', 'waitListStatus')->name('waitListStatus');
+            });
+        // Application Status Routes end here ------
+
+        // Allotment Details Routes start here ------
+        Route::controller(AllotmentDetailsController::class)
+            ->name('allotment.')
+            ->prefix('allotments')
+            ->group(function () {
+                Route::get('new-allotment', 'newAllotment')->name('newAllotment');
+                Route::get('category-shifting', 'categoryShifting')->name('categoryShifting');
+                Route::get('vertical-shifting', 'verticalShifting')->name('verticalShifting');
+            });
+        // Allotment Details Routes end here ------
     });
 });
 // Authenticated Routes end here ------

@@ -7,7 +7,6 @@ use App\Http\Requests\AllotmentApplication\FloorShiftRequest;
 use App\Models\HousingDdo;
 use App\Models\HousingDistrict;
 use App\Models\HousingPayBandCategory;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class FloorShiftingController extends Controller

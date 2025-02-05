@@ -18,16 +18,18 @@
                 Dashboard
             </a>
         </li>
+        {{-- ------ Applicant routes start ------ --}}
         @role(['applicant'])
+            {{-- Online application starts  --}}
             <li class="nav-item has-submenu">
-                <a class="nav-link {{ Str::contains(url()->current(), ['floor-shifting', 'new-application', 'category-shifting']) ? 'active' : null }}"
+                <a class="nav-link {{ Str::contains(url()->current(), ['applications/floor-shifting', 'applications/new-application', 'applications/category-shifting']) ? 'active' : null }}"
                     href="#">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                         class="bi bi-file-earmark-person-fill" viewBox="0 0 16 16">
                         <path
                             d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0m2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755" />
                     </svg>
-                    All Application
+                    Online Application
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-chevron-down float-end mt-1" viewBox="0 0 16 16">
                         <path fill-rule="evenodd"
@@ -35,79 +37,72 @@
                     </svg>
                 </a>
                 <ul
-                    class="submenu {{ Str::contains(url()->current(), ['floor-shifting', 'new-application', 'category-shifting']) ? null : 'collapse' }}">
-                    <li><a class="nav-link {{ Str::contains(url()->current(), ['new-application']) ? 'active' : null }}"
+                    class="submenu {{ Str::contains(url()->current(), ['applications/floor-shifting', 'applications/new-application', 'applications/category-shifting']) ? null : 'collapse' }}">
+                    <li><a class="nav-link {{ Str::contains(url()->current(), ['applications/new-application']) ? 'active' : null }}"
                             href="{{ route('hrms.create') }}">New Application</a></li>
-                    <li><a class="nav-link {{ Str::contains(url()->current(), ['floor-shifting']) ? 'active' : null }}"
+                    <li><a class="nav-link {{ Str::contains(url()->current(), ['applications/floor-shifting']) ? 'active' : null }}"
                             href="{{ route('vs.create') }}">Floor Shifting</a></li>
-                    <li><a class="nav-link {{ Str::contains(url()->current(), ['category-shifting']) ? 'active' : null }}"
+                    <li><a class="nav-link {{ Str::contains(url()->current(), ['applications/category-shifting']) ? 'active' : null }}"
                             href="{{ route('cs.create') }}">Category Shifting</a></li>
-                    {{-- <li><a class="nav-link" href="#">New Licence</a></li> --}}
-                    {{-- <li><a class="nav-link" href="#">Floor Shifting Licence</a></li> --}}
-                    {{-- <li><a class="nav-link" href="#">Category Shifting Licence</a> </li> --}}
                 </ul>
             </li>
+            {{-- Online application ends  --}}
+
+            {{-- Application status starts  --}}
+            <li class="nav-item has-submenu">
+                <a class="nav-link {{ Str::contains(url()->current(), ['status/application-status', 'status/wait-list-status']) ? 'active' : null }}"
+                    href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                        class="bi bi-file-earmark-person-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0m2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755" />
+                    </svg>
+                    Status
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-chevron-down float-end mt-1" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
+                    </svg>
+                </a>
+                <ul
+                    class="submenu {{ Str::contains(url()->current(), ['status/application-status', 'status/wait-list-status']) ? null : 'collapse' }}">
+                    <li><a class="nav-link {{ Str::contains(url()->current(), ['status/application-status']) ? 'active' : null }}"
+                            href="{{ route('status.applicationStatus') }}">Application Status</a></li>
+                    <li><a class="nav-link {{ Str::contains(url()->current(), ['status/wait-list-status']) ? 'active' : null }}"
+                            href="{{ route('status.waitListStatus') }}">Wait List Status</a></li>
+                </ul>
+            </li>
+            {{-- Application status ends  --}}
+
+            {{-- Allotment details start --}}
+            <li class="nav-item has-submenu">
+                <a class="nav-link {{ Str::contains(url()->current(), ['allotments/new-allotment', 'allotments/category-shifting', 'allotments/vertical-shifting']) ? 'active' : null }}"
+                    href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                        class="bi bi-file-earmark-person-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0m2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755" />
+                    </svg>
+                    Allotment Details
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-chevron-down float-end mt-1" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
+                    </svg>
+                </a>
+                <ul
+                    class="submenu {{ Str::contains(url()->current(), ['allotments/new-allotment', 'allotments/category-shifting', 'allotments/vertical-shifting']) ? null : 'collapse' }}">
+                    <li><a class="nav-link {{ Str::contains(url()->current(), ['allotments/new-allotment']) ? 'active' : null }}"
+                            href="{{ route('allotment.newAllotment') }}">New Allotment</a></li>
+                    <li><a class="nav-link {{ Str::contains(url()->current(), ['allotments/vertical-shifting']) ? 'active' : null }}"
+                            href="{{ route('allotment.verticalShifting') }}">Vertical Shifting</a></li>
+                    <li><a class="nav-link {{ Str::contains(url()->current(), ['allotments/category-shifting']) ? 'active' : null }}"
+                            href="{{ route('allotment.categoryShifting') }}">Category Shifting</a></li>
+                </ul>
+            </li>
+            {{-- Allotment details end --}}
         @endrole
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                    class="bi bi-file-earmark-person-fill" viewBox="0 0 16 16">
-                    <path
-                        d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0m2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755" />
-                </svg>
-                Allotment
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                    class="bi bi-file-earmark-person-fill" viewBox="0 0 16 16">
-                    <path
-                        d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0m2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755" />
-                </svg>
-                Licence
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                    class="bi bi-file-earmark-person-fill" viewBox="0 0 16 16">
-                    <path
-                        d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0m2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755" />
-                </svg>
-                Master Data
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                    class="bi bi-files" viewBox="0 0 16 16">
-                    <path
-                        d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V2a2 2 0 0 0-2-2m0 13V4a2 2 0 0 0-2-2H5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1M3 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z" />
-                </svg>
-                Reports
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ url('housing-flat-add') }}" class="nav-link">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                    class="bi bi-files" viewBox="0 0 16 16">
-                    <path
-                        d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V2a2 2 0 0 0-2-2m0 13V4a2 2 0 0 0-2-2H5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1M3 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z" />
-                </svg>
-                Add Housing Flat
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ url('housing-flat-edit') }}" class="nav-link">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                    class="bi bi-files" viewBox="0 0 16 16">
-                    <path
-                        d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V2a2 2 0 0 0-2-2m0 13V4a2 2 0 0 0-2-2H5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1M3 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z" />
-                </svg>
-                Edit Flat
-            </a>
-        </li>
+        {{-- ------ Applicant routes end ------ --}}
     </ul>
     <hr />
     <!-- <button type="button" class="btn btn-outline-light border-dashed"><img src="./images/complaint_icon.png" /><br/>Complaint Management</button> -->
