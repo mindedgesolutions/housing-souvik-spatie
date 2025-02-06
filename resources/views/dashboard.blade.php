@@ -10,11 +10,23 @@
             <div class="content">
                 <div class="row">
                     <div class="col-md-12">
+                        {{-- Notes:
+											?-> is a null safe operator. It is used to access the property of a variable which may be null. If the variable is null, the expression will return null instead of throwing an error.
+
+											?? is a null coalescing operator. It is used to provide a default value if the variable is null.
+
+											For example, $user?->housingApplicantOfficialDetails?->applicant_designation ?? 'NA' means if $user is not null, then access $user->housingApplicantOfficialDetails->applicant_designation, if $user->housingApplicantOfficialDetails is not null, then access $user->housingApplicantOfficialDetails->applicant_designation, if $user->housingApplicantOfficialDetails->applicant_designation is not null, then return $user->housingApplicantOfficialDetails->applicant_designation, otherwise return 'NA'. --}}
+
                         <div class="counter-box p-3 rounded mb-3 position-relative shadow-sm row">
                             <div class="col-md-9">
                                 <h4 class="title-lg">Welcome to e-Allotment of Rental Housing Estate</h4><br>
-                                <h6>Designation: {{ $user->housingApplicantOfficialDetails->applicant_designation }}</h6>
-                                <h6>Mobile Number: {{ $user->housingApplicantOfficialDetails->mobile_no }}</h6>
+                                <h6>Designation:
+                                    {{ $user?->housingApplicantOfficialDetails?->applicant_designation ?? 'NA' }}</h6>
+
+                                <h6>Mobile Number:
+                                    {{ $user->housingApplicant->count() > 0 ? $user->housingApplicant[$user->housingApplicant->count() - 1]->mobile_no : 'NA' }}
+                                </h6>
+
                                 <h6>Email: {{ $user->email }}</h6>
                             </div>
                             <div class="col-md-3"><img
@@ -38,28 +50,26 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td><b>TEST</b></td>
-                                        <td>EO-02012025-3565</td>
-                                        <td>N/A</td>
-                                        <td>Existing Occupant</td>
-                                    </tr>
+                                    @if ($user?->housingApplicantOfficialDetails?->housingOnlineApplication?->application_no)
+                                        <tr>
+                                            <td><b>{{ $user->name }}</b></td>
 
+                                            <td>{{ $user?->housingApplicantOfficialDetails?->housingOnlineApplication?->application_no ?? 'NA' }}
+                                            </td>
+
+                                            <td>{{ $user?->housingApplicantOfficialDetails?->housingOnlineApplication?->date_of_application ? date('d-m-Y', strtotime($user->housingApplicantOfficialDetails->housingOnlineApplication->date_of_application)) : 'NA' }}
+                                            </td>
+
+                                            <td>{{ ucwords(strtolower($user?->housingApplicantOfficialDetails?->housingOnlineApplication?->status)) }}
+                                            </td>
+                                        </tr>
+                                    @else
+                                        <tr>
+                                            <td colspan="4" class="text-center">No application found</td>
+                                        </tr>
+                                    @endif
                                 </tbody>
                             </table>
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination justify-content-end pagination-sm">
-                                    <li class="page-item disabled">
-                                        <a class="page-link">Previous</a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">Next</a>
-                                    </li>
-                                </ul>
-                            </nav>
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -80,18 +90,13 @@
                                                 class="w-75" />
                                             <p style="color:red; font-family: Arial, sans-serif; font-size: 16px;">No Latest
                                                 Notifications</p>
-
-
                                         </div>
-
-
 
                                         <div class="carousel-item p-3">
                                             <img src="http://10.173.42.87:8080/rhewbhousing/rhe-wbhousing-v2/sites/all/themes/housingtheme/images/notification.png"
                                                 class="w-75" />
                                             <p style="color:red; font-family: Arial, sans-serif; font-size: 16px;">No Latest
                                                 Notifications</p>
-
                                         </div>
 
                                     </div>

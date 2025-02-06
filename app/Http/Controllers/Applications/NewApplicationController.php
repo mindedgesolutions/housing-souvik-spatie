@@ -267,7 +267,7 @@ class NewApplicationController extends Controller
 
             Alert::success('Done!', 'Application submitted successfully');
 
-            // return redirect()->route('dashboard');
+            return redirect()->route('dashboard');
         } catch (\Throwable $th) {
             DB::rollBack();
             Log::error('An error occurred: ' . $th->getMessage());

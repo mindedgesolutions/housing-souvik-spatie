@@ -1,8 +1,8 @@
 @extends('layouts.dashboard-master')
 
-@section('title', 'New Allotment | ' . config('app.name'))
+@section('title', 'Allotment Details (New Allotment) | ' . config('app.name'))
 
-@section('page-header', 'New Allotment')
+@section('page-header', 'Allotment Details (New Allotment)')
 
 @section('dashboard-body')
 
