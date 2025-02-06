@@ -45,7 +45,7 @@ class User extends Authenticatable
 
     public function housingApplicantOfficialDetails()
     {
-        return $this->hasOne(HousingApplicantOfficialDetails::class, 'applicant_official_detail_id', 'id');
+        return $this->hasOne(HousingApplicantOfficialDetails::class, 'uid', 'id');
     }
 
     public function housingApplicant()

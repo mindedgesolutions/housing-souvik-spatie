@@ -1,4 +1,4 @@
-<div class="d-flex flex-row justify-content-between">
+<div class="d-flex flex-row justify-content-between mb-4">
     <div class="title">
         <h3>@yield('page-header')</h3>
         <!-- <ul class="breadcrumb text-muted fs-6 fw-normal ms-1">
