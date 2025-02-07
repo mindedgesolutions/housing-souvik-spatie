@@ -16,7 +16,8 @@
     <section class="slider">
         <div class="overlay-1"></div>
         <div class="overlay-2"></div>
-        <a href="{{ url('site-login') }}" class="admin-login position-absolute end-0 mx-4 mt-5">Admin Login</a>
+        <a href="{{ route('login.create') }}" class="admin-login position-absolute end-0 mx-4 mt-5">Admin
+            Login</a>
         <div class="p-5 text-center position-absolute start-0 end-0">
             <div class="container">
                 <a href="{{ url('/') }}">

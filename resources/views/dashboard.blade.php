@@ -10,21 +10,14 @@
             <div class="content">
                 <div class="row">
                     <div class="col-md-12">
-                        {{-- Notes:
-											?-> is a null safe operator. It is used to access the property of a variable which may be null. If the variable is null, the expression will return null instead of throwing an error.
-
-											?? is a null coalescing operator. It is used to provide a default value if the variable is null.
-
-											For example, $user?->housingApplicantOfficialDetails?->applicant_designation ?? 'NA' means if $user is not null, then access $user->housingApplicantOfficialDetails->applicant_designation, if $user->housingApplicantOfficialDetails is not null, then access $user->housingApplicantOfficialDetails->applicant_designation, if $user->housingApplicantOfficialDetails->applicant_designation is not null, then return $user->housingApplicantOfficialDetails->applicant_designation, otherwise return 'NA'. --}}
-
                         <div class="counter-box p-3 rounded mb-3 position-relative shadow-sm row">
                             <div class="col-md-9">
                                 <h4 class="title-lg">Welcome to e-Allotment of Rental Housing Estate</h4><br>
                                 <h6>Designation:
-                                    {{ $user?->housingApplicantOfficialDetails?->applicant_designation ?? 'NA' }}</h6>
+                                    {{ $hrmsData['applicantDesignation'] }}</h6>
 
                                 <h6>Mobile Number:
-                                    {{ $user->housingApplicant->count() > 0 ? $user->housingApplicant[$user->housingApplicant->count() - 1]->mobile_no : 'NA' }}
+                                    {{ $hrmsData['mobileNo'] }}
                                 </h6>
 
                                 <h6>Email: {{ $user->email }}</h6>
@@ -35,6 +28,12 @@
                         </div>
                     </div>
                 </div>
+
+                {{-- Notes:
+                ?-> is a null safe operator. It is used to access the property of a variable which may be null. If the variable is null, the expression will return null instead of throwing an error.
+
+                ?? is a null coalescing operator. It is used to provide a default value if the variable is null
+                --}}
 
                 <div class="row">
                     <h4 class="mt-4">Application List</h4>

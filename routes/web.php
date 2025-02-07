@@ -13,6 +13,7 @@ use App\Http\Controllers\ApplicationStatusController;
 use App\Http\Controllers\HrmsDdoController;
 use App\Http\Controllers\Master\MasterController;
 use App\Http\Controllers\MigrateController;
+use App\Http\Controllers\Subdiv\OccupantDataController;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -30,21 +31,24 @@ Route::controller(MigrateController::class)->group(function () {
 Auth::routes();
 
 Route::controller(LoginController::class)->name('login.')->group(function () {
-    Route::get('site-login', 'showLoginForm')->name('showLoginForm');
+    Route::get('user/login', 'create')->name('create');
+    Route::post('user/login', 'store')->name('store');
+    Route::get('site-login', 'showLoginForm')->name('showLoginForm'); // Not using this route
     Route::get('refresh-captcha', 'refreshCaptcha')->name('refreshCaptcha');
     Route::post('applicant-login', 'applicantLogin')->name('applicantLogin');
 });
 
 // Authenticated Routes start here ------
 Route::middleware(['auth'])->group(function () {
-    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
     Route::controller(MasterController::class)->name('master.')->group(function () {
         Route::get('flat-type', 'getFlatType')->name('flatType');
         Route::get('get-estate-preference', 'getEstatePreference')->name('getEstatePreference');
     });
 
+    // Applicant Routes start here ------
     Route::middleware(['role:applicant'])->group(function () {
+        Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
         // All Applications Routes start here ------
         Route::controller(NewApplicationController::class)
             ->middleware(['check.applied'])
@@ -94,6 +98,31 @@ Route::middleware(['auth'])->group(function () {
             });
         // Allotment Details Routes end here ------
     });
+    // Applicant Routes end here ------
+
+
+
+
+
+    // Sub-division Routes start here ------
+    Route::middleware(['role:sub-division'])->group(function () {
+        Route::get('dashboard/sub-division', [DashboardController::class, 'subdiv'])->name('subdiv.dashboard');
+
+        // Occupant Data Routes start here ------
+        Route::resource('occupant-data', OccupantDataController::class)->except(['destroy']);
+        // Occupant Data Routes end here ------
+    });
+    // Sub-division Routes end here ------
+
+
+
+
+
+    // Division Routes start here ------
+    Route::middleware(['role:division'])->group(function () {
+        Route::get('dashboard/division', [DashboardController::class, 'division'])->name('division.dashboard');
+    });
+    // Division Routes end here ------
 });
 // Authenticated Routes end here ------
 

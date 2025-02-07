@@ -49,11 +49,36 @@ class LoginController extends Controller
         return response()->json(['captcha' => captcha_src()]);
     }
 
-    public function showLoginForm()
+    // Employee login related functions start here ------
+    public function create()
     {
-        return view('siteLogin');
+        return view('auth.emp-login');
     }
 
+    public function store(Request $request)
+    {
+        $user = User::whereEmail($request->email)->first();
+
+        if ($user && Hash::check($request->password, $user->password)) {
+            Auth::login($user);
+
+            if ($user->hasRole('division')) {
+                return redirect()->route('division.dashboard');
+            } elseif ($user->hasRole('sub-division')) {
+                return redirect()->route('subdiv.dashboard');
+            } else {
+                return redirect()->route('dashboard');
+            }
+        } else {
+            return redirect()
+                ->back()
+                ->withErrors(['user_not_found' => 'User not found. Please enter a valid HRMS ID']);
+        }
+    }
+    // Employee login related functions end here ------
+
+
+    // Applicant login starts ------
     public function applicantLogin(Request $request)
     {
         $request->validate([
@@ -96,5 +121,11 @@ class LoginController extends Controller
             }
             // Login ends ------
         }
+    }
+    // Applicant login ends ------
+
+    public function showLoginForm()
+    {
+        return view('siteLogin');
     }
 }

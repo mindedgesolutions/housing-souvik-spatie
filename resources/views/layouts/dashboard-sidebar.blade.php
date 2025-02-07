@@ -103,6 +103,36 @@
             {{-- Allotment details end --}}
         @endrole
         {{-- ------ Applicant routes end ------ --}}
+
+
+
+
+        {{-- ------ Sub-division routes start ------ --}}
+        @role(['sub-division'])
+            {{-- Online application starts  --}}
+            <li class="nav-item has-submenu">
+                <a class="nav-link {{ Str::contains(url()->current(), ['applications/floor-shifting', 'applications/new-application', 'applications/category-shifting']) ? 'active' : null }}"
+                    href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                        class="bi bi-file-earmark-person-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0m2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755" />
+                    </svg>
+                    Occupant Data
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-chevron-down float-end mt-1" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
+                    </svg>
+                </a>
+                <ul
+                    class="submenu {{ Str::contains(url()->current(), ['applications/floor-shifting', 'applications/new-application', 'applications/category-shifting']) ? null : 'collapse' }}">
+                    <li><a class="nav-link {{ Str::contains(url()->current(), ['applications/new-application']) ? 'active' : null }}"
+                            href="{{ route('hrms.create') }}">Occupant Data Entry</a></li>
+                </ul>
+            </li>
+            {{-- Online application ends  --}}
+        @endrole
     </ul>
     <hr />
     <!-- <button type="button" class="btn btn-outline-light border-dashed"><img src="./images/complaint_icon.png" /><br/>Complaint Management</button> -->
