@@ -52,4 +52,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(HousingApplicant::class, 'uid', 'id');
     }
+
+    public function userDetail()
+    {
+        return $this->hasOne(UserDetail::class, 'uid', 'id');
+    }
 }

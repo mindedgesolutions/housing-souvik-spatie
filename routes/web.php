@@ -109,7 +109,14 @@ Route::middleware(['auth'])->group(function () {
         Route::get('dashboard/sub-division', [DashboardController::class, 'subdiv'])->name('subdiv.dashboard');
 
         // Occupant Data Routes start here ------
-        Route::resource('occupant-data', OccupantDataController::class)->except(['destroy']);
+        Route::controller(OccupantDataController::class)->name('occupant-data.')->group(function () {
+            Route::get('occupant-data', 'index')->name('inex');
+            Route::get('occupant-data/new', 'create')->name('create');
+            Route::post('occupant-data', 'store')->name('store');
+            Route::get('occupant-flat-type', 'getOccupantFlatType')->name('occupant.flat.type');
+            Route::get('occupant-block', 'getOccupantBlock')->name('occupant.block');
+            Route::get('occupant-flat-no', 'getOccupantFlatNo')->name('occupant.flatno');
+        });
         // Occupant Data Routes end here ------
     });
     // Sub-division Routes end here ------

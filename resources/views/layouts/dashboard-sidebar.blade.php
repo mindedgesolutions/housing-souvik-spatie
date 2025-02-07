@@ -7,19 +7,20 @@
         </div>
     </a>
     <ul class="nav nav-pills flex-column mb-auto">
-        <li class="nav-item">
-            <a href="{{ route('dashboard') }}"
-                class="nav-link {{ Str::contains(url()->current(), ['dashboard']) ? 'active' : null }}">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                    class="bi bi-grid-fill" viewBox="0 0 16 16">
-                    <path
-                        d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5z" />
-                </svg>
-                Dashboard
-            </a>
-        </li>
         {{-- ------ Applicant routes start ------ --}}
         @role(['applicant'])
+            <li class="nav-item">
+                <a href="{{ route('dashboard') }}"
+                    class="nav-link {{ Str::contains(url()->current(), ['dashboard']) ? 'active' : null }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                        class="bi bi-grid-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5z" />
+                    </svg>
+                    Dashboard
+                </a>
+            </li>
+
             {{-- Online application starts  --}}
             <li class="nav-item has-submenu">
                 <a class="nav-link {{ Str::contains(url()->current(), ['applications/floor-shifting', 'applications/new-application', 'applications/category-shifting']) ? 'active' : null }}"
@@ -109,9 +110,21 @@
 
         {{-- ------ Sub-division routes start ------ --}}
         @role(['sub-division'])
+            <li class="nav-item">
+                <a href="{{ route('subdiv.dashboard') }}"
+                    class="nav-link {{ Str::contains(url()->current(), ['dashboard']) ? 'active' : null }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                        class="bi bi-grid-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5z" />
+                    </svg>
+                    Dashboard
+                </a>
+            </li>
+
             {{-- Online application starts  --}}
             <li class="nav-item has-submenu">
-                <a class="nav-link {{ Str::contains(url()->current(), ['applications/floor-shifting', 'applications/new-application', 'applications/category-shifting']) ? 'active' : null }}"
+                <a class="nav-link {{ Str::contains(url()->current(), ['occupant-data']) ? 'active' : null }}"
                     href="#">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                         class="bi bi-file-earmark-person-fill" viewBox="0 0 16 16">
@@ -125,10 +138,9 @@
                             d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
                     </svg>
                 </a>
-                <ul
-                    class="submenu {{ Str::contains(url()->current(), ['applications/floor-shifting', 'applications/new-application', 'applications/category-shifting']) ? null : 'collapse' }}">
-                    <li><a class="nav-link {{ Str::contains(url()->current(), ['applications/new-application']) ? 'active' : null }}"
-                            href="{{ route('hrms.create') }}">Occupant Data Entry</a></li>
+                <ul class="submenu {{ Str::contains(url()->current(), ['occupant-data']) ? null : 'collapse' }}">
+                    <li><a class="nav-link {{ Str::contains(url()->current(), ['occupant-data/create']) ? 'active' : null }}"
+                            href="{{ route('occupant-data.create') }}">Occupant Data Entry</a></li>
                 </ul>
             </li>
             {{-- Online application ends  --}}
