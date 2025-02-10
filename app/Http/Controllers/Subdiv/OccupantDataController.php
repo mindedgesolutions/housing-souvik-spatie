@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Subdiv;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\OccupantDataEntryRequest;
 use App\Models\HousingEstate;
 use App\Models\HousingFlat;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OccupantDataController extends Controller
 {
@@ -21,15 +23,17 @@ class OccupantDataController extends Controller
     public function create()
     {
         $housingEstates = HousingEstate::where('subdiv_id', auth()->user()->userDetail->subdiv_id)->get();
+        $districts_array = config('lookup.districts'); // Coming from config/lookup.php
+        $districts = (object)$districts_array; // Converting array to object
 
-        return view('subdiv.occupant-data.occupant-data-form', compact('housingEstates'));
+        return view('subdiv.occupant-data.occupant-data-form', compact('housingEstates', 'districts'));
     }
 
     // ----------------------------------------------
 
-    public function store(Request $request)
+    public function store(OccupantDataEntryRequest $request)
     {
-        //
+        dd($request->all());
     }
 
     // ----------------------------------------------
@@ -90,5 +94,18 @@ class OccupantDataController extends Controller
 
     // ----------------------------------------------
 
-    public function getOccupantFlatNo(Request $request) {}
+    public function getOccupantFlatNo(Request $request)
+    {
+        $flatNos = DB::table('housing_flat', 'hf')
+            ->leftJoin('housing_flat_occupant', 'hf.flat_id', '=', 'housing_flat_occupant.flat_id')
+            ->where('hf.estate_id', $request->estate_id)
+            ->where('hf.flat_type_id', $request->flat_type_id)
+            ->where('hf.block_id', $request->block_name)
+            ->where('housing_flat_occupant.flat_id', null)
+            ->select('hf.flat_id', 'hf.flat_no')
+            ->orderBy('hf.flat_id')
+            ->get();
+
+        return response()->json(['flatNos' => $flatNos]);
+    }
 }

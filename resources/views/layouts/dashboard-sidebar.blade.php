@@ -139,7 +139,7 @@
                     </svg>
                 </a>
                 <ul class="submenu {{ Str::contains(url()->current(), ['occupant-data']) ? null : 'collapse' }}">
-                    <li><a class="nav-link {{ Str::contains(url()->current(), ['occupant-data/create']) ? 'active' : null }}"
+                    <li><a class="nav-link {{ Str::contains(url()->current(), ['occupant-data/new']) ? 'active' : null }}"
                             href="{{ route('occupant-data.create') }}">Occupant Data Entry</a></li>
                 </ul>
             </li>
