@@ -347,7 +347,8 @@
                                     <label for="edit-dob">Date of Birth(According to Service Book) <span
                                             class="form-required" title="This field is required.">*</span></label>
                                     <input id="edit_dob" class="form-control form-text required hasDatepicker"
-                                        type="date" name="dob" value="{{ old('dob') }}">
+                                        type="date" name="dob" max="{{ date('Y-m-d') }}"
+                                        value="{{ old('dob') }}">
                                     <span id="error_edit_dob" class="text-danger"></span>
                                     @error('dob')
                                         <span class="text-danger">{{ $message }}</span>
