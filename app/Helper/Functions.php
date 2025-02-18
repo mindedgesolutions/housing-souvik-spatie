@@ -1,4 +1,7 @@
 <?php
+
+use App\Models\HousingPayBandCategory;
+
 function customJsonValidator($data)
 {
   if (!empty($data)) {
@@ -54,4 +57,21 @@ function formatHrmsDate($dateString)
   $result = $result->format('Y-m-d');
 
   return $result;
+}
+
+function basicPaybandCategories()
+{
+  $dbPayBands = HousingPayBandCategory::orderBy('pay_band_id')->get();
+
+  foreach ($dbPayBands as $payBand) {
+    if ($payBand->scale_from == 0 && $payBand->scale_to != 0) {
+      $label = '(Up to Rs.' . $payBand->scale_to . '/-)';
+    } else if ($payBand->scale_from != 0 && $payBand->scale_to != 0) {
+      $label = '(Rs.' . $payBand->scale_from . '/ Up to Rs.' . $payBand->scale_to . '/-)';
+    } else {
+      $label = '(Rs.' . $payBand->scale_from . '/- and above)';
+    }
+    $payBands[$payBand->pay_band_id] = $label;
+  }
+  return $payBands;
 }

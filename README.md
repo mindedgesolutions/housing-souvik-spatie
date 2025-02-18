@@ -94,3 +94,18 @@ truncate table housing_allotment_roaster_counter cascade;
 truncate table housing_allotment_roaster_details cascade;
 truncate table housing_applicant cascade;
 truncate table housing_ddo_hrms_mapping cascade;
+
+<!-- ------------------------------------------------------------- -->
+<!-- delete record from users table manually -->
+
+truncate table housing_applicant cascade;
+truncate table housing_applicant_official_detail cascade;
+truncate table housing_online_application cascade;
+truncate table housing_new_allotment_application cascade;
+
+<!-- update housing_flat manually -->
+
+truncate table housing_flat_occupant cascade;
+truncate table housing_occupant_license cascade;
+
+<!-- ------------------------------------------------------------- -->

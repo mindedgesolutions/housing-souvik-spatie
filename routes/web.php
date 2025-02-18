@@ -50,52 +50,36 @@ Route::middleware(['auth'])->group(function () {
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
         // All Applications Routes start here ------
-        Route::controller(NewApplicationController::class)
-            ->middleware(['check.applied'])
-            ->name('hrms.')
-            ->prefix('applications')
-            ->group(function () {
-                Route::get('new-application', 'create')->name('create');
-                Route::post('new-application', 'store')->name('store');
-                Route::get('view-application', 'view')->name('view');
-            });
+        Route::controller(NewApplicationController::class)->middleware(['check.applied'])->name('hrms.')->prefix('applications')->group(function () {
+            Route::get('new-application', 'create')->name('create');
+            Route::post('new-application', 'store')->name('store');
+            Route::get('view-application', 'view')->name('view');
+        });
 
-        Route::controller(CategoryShiftingController::class)
-            ->name('cs.')
-            ->prefix('applications')
-            ->group(function () {
-                Route::get('category-shifting', 'create')->name('create');
-                Route::post('cs', 'store')->name('store');
-            });
+        Route::controller(CategoryShiftingController::class)->name('cs.')->prefix('applications')->group(function () {
+            Route::get('category-shifting', 'create')->name('create');
+            Route::post('cs', 'store')->name('store');
+        });
 
-        Route::controller(FloorShiftingController::class)
-            ->name('vs.')
-            ->prefix('applications')
-            ->group(function () {
-                Route::get('floor-shifting', 'create')->name('create');
-                Route::post('vs', 'store')->name('store');
-            });
+        Route::controller(FloorShiftingController::class)->name('vs.')->prefix('applications')->group(function () {
+            Route::get('floor-shifting', 'create')->name('create');
+            Route::post('vs', 'store')->name('store');
+        });
         // All Applications Routes end here ------
 
         // Application Status Routes start here ------
-        Route::controller(ApplicationStatusController::class)
-            ->name('status.')
-            ->prefix('status')
-            ->group(function () {
-                Route::get('application-status', 'applicationStatus')->name('applicationStatus');
-                Route::get('wait-list-status', 'waitListStatus')->name('waitListStatus');
-            });
+        Route::controller(ApplicationStatusController::class)->name('status.')->prefix('status')->group(function () {
+            Route::get('application-status', 'applicationStatus')->name('applicationStatus');
+            Route::get('wait-list-status', 'waitListStatus')->name('waitListStatus');
+        });
         // Application Status Routes end here ------
 
         // Allotment Details Routes start here ------
-        Route::controller(AllotmentDetailsController::class)
-            ->name('allotment.')
-            ->prefix('allotments')
-            ->group(function () {
-                Route::get('new-allotment', 'newAllotment')->name('newAllotment');
-                Route::get('category-shifting', 'categoryShifting')->name('categoryShifting');
-                Route::get('vertical-shifting', 'verticalShifting')->name('verticalShifting');
-            });
+        Route::controller(AllotmentDetailsController::class)->name('allotment.')->prefix('allotments')->group(function () {
+            Route::get('new-allotment', 'newAllotment')->name('newAllotment');
+            Route::get('category-shifting', 'categoryShifting')->name('categoryShifting');
+            Route::get('vertical-shifting', 'verticalShifting')->name('verticalShifting');
+        });
         // Allotment Details Routes end here ------
     });
     // Applicant Routes end here ------
